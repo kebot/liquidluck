@@ -70,8 +70,12 @@ class PostWriter(Writer):
         return ns.storage.functions.update({'content_url': content_url})
 
     def _write_post(self, post):
+        _destination = post.destination
+        if ns.site.slug == 'slash':
+            basename, ext = os.path.splitext(_destination)
+            _destination = basename + "/index" + ext
         _tpl = post.get('template', 'post.html')
-        self.write({'post': post}, _tpl, post.destination)
+        self.write({'post': post}, _tpl, _destination)
 
     def _get_rel_posts(self, post):
         if not post.public:
