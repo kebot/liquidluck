@@ -54,14 +54,14 @@ class Reader(object):
         year = str(post.date.year)
         month = str(post.date.month)
         day = str(post.date.day)
+        if hasattr(post, 'folder'):
+            return os.path.join(post.folder, filename)
         if _format == 'year':
             return os.path.join(year, filename)
         if _format == 'month':
             return os.path.join(year, month, filename)
         if _format == 'day':
             return os.path.join(year, month, day, filename)
-        if hasattr(post, 'folder'):
-            return os.path.join(post.folder, filename)
         return os.path.join(self.get_relative_folder(), filename)
 
     def get_resource_slug(self):
